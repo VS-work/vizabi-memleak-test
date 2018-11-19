@@ -104,7 +104,8 @@
     }
 
     function closeChart(vizabiId, placeholderId) {
-      Vizabi._instances[vizabiId].clear();
+      // Vizabi._instances[vizabiId].clear();
+      Vizabi.clearInstances(vizabiId);
       containerEl.removeChild(document.getElementById(placeholderId));
       var closeBtn = document.getElementById("close_" + vizabiId);
       containerEl.removeChild(closeBtn);
