@@ -29,6 +29,7 @@
   <button onclick="addMountainChart()">MountainChart</button>
   <button onclick="addBarRankChart()">BarRankChart</button>
   <button onclick="addLineChart()">LineChart</button><br>
+  <button onclick="add10BubbleChartWaterfall()">10 X BubbleChart in Waterfall Mode</button>
   <button onclick="add25CsvBubbleChart()">25 X CSV BubbleChart</button>
   <button onclick="addCsvBubbleChart()">CSV BubbleChart</button>
   <div id="container"></div>
@@ -41,7 +42,7 @@
     Vizabi.Reader.extend("ddfcsv", ddfcsvReader);
 
     function addCsvBubbleChart() {
-      var config = {"data":{"reader":"csv","timeInColumns":false,"sheet":"","noCache":true,"path":"http://localhost:8080/migrant--gapminder-geo--1measure.csv","lastModified":1542377594959,"hasNameColumn":false,"nameColumnPosition":0,"_lastModified":1542377594959},"bind":{}};
+      var config = { "data": { "reader": "csv", "timeInColumns": false, "sheet": "", "noCache": true, "path": "http://localhost:8080/migrant--gapminder-geo--1measure.csv", "lastModified": 1542377594959, "hasNameColumn": false, "nameColumnPosition": 0, "_lastModified": 1542377594959 }, "bind": {} };
       return addChart("BubbleChart", config);
     }
 
@@ -58,6 +59,28 @@
           alert('finish');
         }, 30000);
       }, 60000);
+    }
+
+    async function add10BubbleChartWaterfall() {
+      for (var i = 0; i < 10; i++) {
+        await addAndCloseChart();
+      }
+
+      setTimeout(() => {
+        alert('finish');
+      }, 5000);
+    }
+
+    async function addAndCloseChart() {
+      return new Promise(resolve => {
+        var chart = addBubbleChart();
+        setTimeout(() => {
+          closeChart(chart.vizabiId, chart.placeholderId);
+          setTimeout(() => {
+            resolve();
+          }, 500);
+        }, 10000);
+      });
     }
 
     function addBubbleChart() {
@@ -140,7 +163,7 @@
       buttonEl.innerHTML = "x";
       containerEl.appendChild(buttonEl);
 
-      return {vizabiId: viz._id, placeholderId};
+      return { vizabiId: viz._id, placeholderId };
     }
   </script>
 
